@@ -5,7 +5,7 @@
 @layout MainLayout
 
 <div class="main">
-    <EditForm Model=Order.DeliveryAddress OnSubmit=CheckSubmission>
+    <EditForm Model=Order.DeliveryAddress OnValidSubmit=CheckSubmission>
 
         <div class="checkout-cols">
             <div class="checkout-order-details">
@@ -26,6 +26,8 @@
         <button class="checkout-button btn btn-warning" disabled=@isSubmitting>
             Place order
         </button>
+        <ValidationSummary />
+        <DataAnnotationsValidator />
     </EditForm>
 </div>
 
