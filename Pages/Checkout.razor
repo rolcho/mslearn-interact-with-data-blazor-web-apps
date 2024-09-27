@@ -1,11 +1,12 @@
 ﻿@page "/checkout"
+@implements IDisposable
 @inject OrderState OrderState
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @layout MainLayout
 
 <div class="main">
-    <EditForm Model=Order.DeliveryAddress OnValidSubmit=PlaceOrder OnInvalidSubmit=ShowError>
+    <EditForm EditContext=editContext OnValidSubmit=PlaceOrder >
 
         <div class="checkout-cols">
             <div class="checkout-order-details">
@@ -23,7 +24,7 @@
             </div>
         </div>
 
-        <button class="checkout-button btn btn-warning" disabled=@isSubmitting>
+        <button class="checkout-button btn btn-warning" disabled=@isError>
             Place order
         </button>
         <DataAnnotationsValidator />
@@ -34,35 +35,37 @@
     Order Order => OrderState.Order;
     bool isSubmitting;
     bool isError = false;
+    private EditContext editContext;
 
-    private async Task CheckSubmission(EditContext editContext)
-    {
-        isSubmitting = true;
-        var model = editContext.Model as Address;
-        isError = string.IsNullOrWhiteSpace(model?.Name)
-        || string.IsNullOrWhiteSpace(model?.Line1)
-        || string.IsNullOrWhiteSpace(model?.PostalCode);
-        if (!isError)
-        {
-            await PlaceOrder();
-        }
-        isSubmitting = false;
-    }
+ 
 
     async Task PlaceOrder()
     {
-        isError = false;
-        isSubmitting = true;
         var response = await HttpClient.PostAsJsonAsync(NavigationManager.BaseUri + "orders", OrderState.Order);
         var newOrderId = await response.Content.ReadFromJsonAsync<int>();
         OrderState.ResetOrder();
         NavigationManager.NavigateTo($"myorders");
     }
 
-
-
     protected void ShowError()
     {
         isError = true;
+    }
+
+    protected override void OnInitialized()
+    {
+        editContext = new (Order.DeliveryAddress);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+
+    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        isError = !editContext.Validate();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        editContext.OnFieldChanged -= HandleFieldChanged;
     }
 }
