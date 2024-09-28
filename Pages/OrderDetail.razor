@@ -1,7 +1,7 @@
 ﻿@page "/myorders/{orderId:int}"
+@layout MainLayout
 @inject NavigationManager NavigationManager
 @inject HttpClient HttpClient
-@layout MainLayout
 
 <div class="main">
     @if (invalidOrder)

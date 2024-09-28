@@ -291,6 +291,13 @@ form {
   font-weight: 700;
 }
 
+.cart-item button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-right: 0.5rem;
+}
+
 .cart-item ul {
   padding: 0;
   margin: 0.4rem 0.6rem;

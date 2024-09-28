@@ -1,12 +1,12 @@
 ﻿@page "/checkout"
-@implements IDisposable
+@layout MainLayout
 @inject OrderState OrderState
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
-@layout MainLayout
+@implements IDisposable
 
 <div class="main">
-    <EditForm EditContext=editContext OnValidSubmit=PlaceOrder >
+    <EditForm EditContext=editContext OnValidSubmit=PlaceOrder>
 
         <div class="checkout-cols">
             <div class="checkout-order-details">
@@ -33,11 +33,8 @@
 
 @code {
     Order Order => OrderState.Order;
-    bool isSubmitting;
     bool isError = false;
     private EditContext editContext;
-
- 
 
     async Task PlaceOrder()
     {
@@ -54,7 +51,7 @@
 
     protected override void OnInitialized()
     {
-        editContext = new (Order.DeliveryAddress);
+        editContext = new(Order.DeliveryAddress);
         editContext.OnFieldChanged += HandleFieldChanged;
     }
 
