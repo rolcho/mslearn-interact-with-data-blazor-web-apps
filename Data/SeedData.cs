@@ -6,14 +6,14 @@ public static class SeedData
     {
         var specials = new PizzaSpecial[]
         {
-            new PizzaSpecial()
+            new()
             {
                 Name = "Basic Cheese Pizza",
                 Description = "It's cheesy and delicious. Why wouldn't you want one?",
                 BasePrice = 9.99m,
                 ImageUrl = "img/pizzas/cheese.jpg",
             },
-            new PizzaSpecial()
+            new()
             {
                 Id = 2,
                 Name = "The Baconatorizor",
@@ -21,7 +21,7 @@ public static class SeedData
                 BasePrice = 11.99m,
                 ImageUrl = "img/pizzas/bacon.jpg",
             },
-            new PizzaSpecial()
+            new()
             {
                 Id = 3,
                 Name = "Classic pepperoni",
@@ -29,7 +29,7 @@ public static class SeedData
                 BasePrice = 10.50m,
                 ImageUrl = "img/pizzas/pepperoni.jpg",
             },
-            new PizzaSpecial()
+            new()
             {
                 Id = 4,
                 Name = "Buffalo chicken",
@@ -37,7 +37,7 @@ public static class SeedData
                 BasePrice = 12.75m,
                 ImageUrl = "img/pizzas/meaty.jpg",
             },
-            new PizzaSpecial()
+            new()
             {
                 Id = 5,
                 Name = "Mushroom Lovers",
@@ -45,7 +45,7 @@ public static class SeedData
                 BasePrice = 11.00m,
                 ImageUrl = "img/pizzas/mushroom.jpg",
             },
-            new PizzaSpecial()
+            new()
             {
                 Id = 7,
                 Name = "Veggie Delight",
@@ -53,13 +53,22 @@ public static class SeedData
                 BasePrice = 11.50m,
                 ImageUrl = "img/pizzas/salad.jpg",
             },
-            new PizzaSpecial()
+            new()
             {
                 Id = 8,
                 Name = "Margherita",
                 Description = "Traditional Italian pizza with tomatoes and basil",
                 BasePrice = 9.99m,
                 ImageUrl = "img/pizzas/margherita.jpg",
+            },
+            new()
+            {
+                Id = 9,
+                Name = "Margherita Family Size",
+                Description = "24\" of pure tomatoes and basil",
+                BasePrice = 14.99m,
+                ImageUrl = "img/pizzas/margherita.jpg",
+                FixedSize = 24,
             },
         };
         db.Specials.AddRange(specials);
